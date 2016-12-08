@@ -75,13 +75,13 @@ TPrimitiva::TPrimitiva(int DL, int t)
 		    ty =  0.0;
 		    tz =  0.0;
 		    rr =  0.0;
-
+            rc =  0.0;
 		    memcpy(colores, coloresc_c, 8*sizeof(float));
 
             //************************ Cargar modelos 3ds ***********************************
             // formato 8 floats por vértice (x, y, z, A, B, C, u, v)
-            modelo0 = Load3DS("../../Modelos/FordF250.3ds", &num_vertices0);
-            modelo1 = Load3DS("../../Modelos/RuedaFord.3ds", &num_vertices1);
+            modelo0 = Load3DS("../../Modelos/Flintstones.3ds", &num_vertices0);
+            modelo1 = Load3DS("../../Modelos/rodillo.3ds", &num_vertices1);
             break;
 		}
 	} // switch
@@ -132,6 +132,8 @@ void __fastcall TPrimitiva::Render(int seleccion, bool reflejo)
                 modelMatrix     = glm::mat4(1.0f); // matriz identidad
                 modelMatrix     = glm::translate(modelMatrix,glm::vec3(tx, ty, tz));
 
+                modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(-rc), glm::vec3(0,1,0));
+
                 modelViewMatrix = escena.viewMatrix * modelMatrix;
 
                 // Envía nuestra ModelView al Vertex Shader
@@ -148,13 +150,15 @@ void __fastcall TPrimitiva::Render(int seleccion, bool reflejo)
                 glVertexAttribPointer(escena.aPositionLocation, POSITION_COMPONENT_COUNT, GL_FLOAT, false, STRIDE, modelo1);
                 glVertexAttribPointer(escena.aNormalLocation, NORMAL_COMPONENT_COUNT, GL_FLOAT, false, STRIDE, modelo1+3);
 
-                // RUEDA Delantera Izquierda : Cálculo de la matriz modelo
+                // RUEDA Delantera : Cálculo de la matriz modelo
                 modelMatrix     = glm::mat4(1.0f); // matriz identidad
 
-                modelMatrix     = glm::translate(modelMatrix, glm::vec3(tx+0.95, ty+0.45, tz));
+                modelMatrix     = glm::translate(modelMatrix, glm::vec3(tx-0.15, ty+0.60, tz-0.6));
                 modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(rr), glm::vec3(1,0,0));      // en radianes
                 modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(180.0), glm::vec3(0,0,1));   // en radianes
 
+                modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(rc), glm::vec3(0,1,0));
+
                 modelViewMatrix = escena.viewMatrix * modelMatrix;
 
                 // Envia nuestra ModelView al Vertex Shader
@@ -162,36 +166,12 @@ void __fastcall TPrimitiva::Render(int seleccion, bool reflejo)
 
                 glDrawArrays(GL_TRIANGLES, 0, num_vertices1);
 
-                // RUEDA Trasera Derecha : Cálculo de la matriz modelo
+                // RUEDA Trasera : Cálculo de la matriz modelo
                 modelMatrix     = glm::mat4(1.0f); // matriz identidad
-                modelMatrix     = glm::translate(modelMatrix, glm::vec3(tx-0.95, ty+0.45, tz));
+                modelMatrix     = glm::translate(modelMatrix, glm::vec3(tx, ty+0.65, tz-4.0));
                 modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(rr), glm::vec3(1,0,0));
 
-                modelViewMatrix = escena.viewMatrix * modelMatrix;
-
-                // Envia nuestra ModelView al Vertex Shader
-                glUniformMatrix4fv(escena.uMVMatrixLocation, 1, GL_FALSE, &modelViewMatrix[0][0]);
-
-                glDrawArrays(GL_TRIANGLES, 0, num_vertices1);
-
-                // RUEDA Delantera Izquierda : Cálculo de la matriz modelo
-                modelMatrix     = glm::mat4(1.0f); // matriz identidad
-
-                modelMatrix     = glm::translate(modelMatrix, glm::vec3(tx+0.95, ty+0.45, tz-4.24));
-                modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(rr), glm::vec3(1,0,0));      // en radianes
-                modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(180.0), glm::vec3(0,0,1));   // en radianes
-
-                modelViewMatrix = escena.viewMatrix * modelMatrix;
-
-                // Envia nuestra ModelView al Vertex Shader
-                glUniformMatrix4fv(escena.uMVMatrixLocation, 1, GL_FALSE, &modelViewMatrix[0][0]);
-
-                glDrawArrays(GL_TRIANGLES, 0, num_vertices1);
-
-                // RUEDA Trasera Derecha : Cálculo de la matriz modelo
-                modelMatrix     = glm::mat4(1.0f); // matriz identidad
-                modelMatrix     = glm::translate(modelMatrix, glm::vec3(tx-0.95, ty+0.45, tz-4.24));
-                modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(rr), glm::vec3(1,0,0));
+                modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(rc), glm::vec3(0,1,0));
 
                 modelViewMatrix = escena.viewMatrix * modelMatrix;
 

@@ -77,6 +77,7 @@ public: // Atributos de la clase
 		float sx,sy,sz; 	    // Escalado del objeto
 		float rx,ry,rz;     	// Rotación del objeto
 		float rr;               // Rotación de las ruedas
+		float rc;               // Rotación de las ruedas
 		float colores[2][4];    // Color RGB y canal Alfa
 
 		float   *modelo0;        // modelo a representar

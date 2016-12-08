@@ -94,19 +94,34 @@ void Keyboard(unsigned char Key, int x, int y)
 static void SpecialKey(int key, int x, int y)
 {
     TPrimitiva *car = escena.GetCar(escena.seleccion);
-
+    std::cout << key;
     switch (key)
     {
         case GLUT_KEY_UP:   // El coche avanza
             car->rr+=8;
             car->tz += 0.05;
+            std::cout << "X: " << car->tx << "Y " << car->ty <<"Z: "<< car->tz <<"R: " << car->rr << std::endl;
+
             break;
         case GLUT_KEY_DOWN:   // El coche retrocede
-            car->rr-=8;
+            //car->rr-=8;
             car->tz -= 0.05;
             break;
-    }
 
+        case 100:   // El coche avanza
+            //car->tx += 0.05;
+            car->rc +=3;
+            std::cout << "X: " << car->tx << "Y " << car->ty <<"Z: "<< car->tz <<"R: " << car->rr << std::endl;
+
+            break;
+        case 102:   // El coche avanza
+            //car->tx -= 0.05;
+            car->rc -=3;
+
+            std::cout << "X: " << car->tx << "Y " << car->ty <<"Z: "<< car->tz <<"R: " << car->rr << std::endl;
+
+            break;
+    }
     glutPostRedisplay();
 }
 
