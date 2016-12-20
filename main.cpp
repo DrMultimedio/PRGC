@@ -104,17 +104,17 @@ static void SpecialKey(int key, int x, int y)
 
             break;
         case GLUT_KEY_DOWN:   // El coche retrocede
-            //car->rr-=8;
+            car->rr-=8;
             car->tz -= 0.05;
             break;
 
-        case 100:   // El coche avanza
+        case 100:   // El coche gira
             //car->tx += 0.05;
             car->rc +=3;
             std::cout << "X: " << car->tx << "Y " << car->ty <<"Z: "<< car->tz <<"R: " << car->rr << std::endl;
 
             break;
-        case 102:   // El coche avanza
+        case 102:   // El coche gira
             //car->tx -= 0.05;
             car->rc -=3;
 
