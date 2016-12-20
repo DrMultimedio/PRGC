@@ -154,9 +154,15 @@ void __fastcall TPrimitiva::Render(int seleccion, bool reflejo)
                 modelMatrix     = glm::mat4(1.0f); // matriz identidad
                 //modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(180.0), glm::vec3(0,0,1));   // en radianes
 
+<<<<<<< HEAD
                 modelMatrix     = glm::translate(modelMatrix, glm::vec3(tx, ty+0.60, tz-0.6));
                 modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(-rc), glm::vec3(0,1,0));
+=======
+>>>>>>> origin/master
                 modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(rr), glm::vec3(1,0,0));      // en radianes
+
+
+                modelMatrix     = glm::translate(modelMatrix, glm::vec3(tx-0.15, ty+0.60, tz-0.6));
 
                 modelViewMatrix = escena.viewMatrix * modelMatrix;
 
