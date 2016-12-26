@@ -99,24 +99,28 @@ static void SpecialKey(int key, int x, int y)
     {
         case GLUT_KEY_UP:   // El coche avanza
             car->rr+=8;
-            car->tz += 0.05;
+                car->tz += 0.05*cos((-car->rc )*3.14/180);
+                car->tx += 0.05*sin((-car->rc)*3.14/180);
+
             std::cout << "X: " << car->tx << "Y " << car->ty <<"Z: "<< car->tz <<"R: " << car->rr << std::endl;
 
             break;
         case GLUT_KEY_DOWN:   // El coche retrocede
             car->rr-=8;
-            car->tz -= 0.05;
+            car->tz -= 0.05*cos((-car->rc )*3.14/180);
+            car->tx -= 0.05*sin((-car->rc)*3.14/180);
+
             break;
 
         case 100:   // El coche gira
             //car->tx += 0.05;
-            car->rc +=3;
+            car->rc -=3;
             std::cout << "X: " << car->tx << "Y " << car->ty <<"Z: "<< car->tz <<"R: " << car->rr << std::endl;
 
             break;
         case 102:   // El coche gira
             //car->tx -= 0.05;
-            car->rc -=3;
+            car->rc +=3;
 
             std::cout << "X: " << car->tx << "Y " << car->ty <<"Z: "<< car->tz <<"R: " << car->rr << std::endl;
 
@@ -185,6 +189,11 @@ int main(int argc, char* argv[])
     TPrimitiva *road = new TPrimitiva(CARRETERA_ID, CARRETERA_ID);
     TPrimitiva *car1 = new TPrimitiva(1, COCHE_ID);
     TPrimitiva *car2 = new TPrimitiva(2, COCHE_ID);
+    TPrimitiva *mesa = new TPrimitiva(MESA_ID, MESA_ID);
+    TPrimitiva *cama = new TPrimitiva(CAMA_ID, CAMA_ID);
+
+
+
 
     car2->colores[0][0] = 0.3;
     car2->colores[0][1] = 0.8;
@@ -194,6 +203,9 @@ int main(int argc, char* argv[])
     car2->tz = 3;
 
     escena.AddObject(road);
+    escena.AddObject(mesa);
+    escena.AddObject(cama);
+
     escena.AddCar(car1);
     escena.AddCar(car2);
 

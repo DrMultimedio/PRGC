@@ -29,6 +29,8 @@
 
 // Identificadores internos de los objetos
 #define CARRETERA_ID    10
+#define MESA_ID    11
+#define CAMA_ID    12
 
 #define COCHE_ID	    100 // Un coche cada 100
 
@@ -77,7 +79,7 @@ public: // Atributos de la clase
 		float sx,sy,sz; 	    // Escalado del objeto
 		float rx,ry,rz;     	// Rotación del objeto
 		float rr;               // Rotación de las ruedas
-		float rc;               // Rotación de las ruedas
+		float rc;               // Rotación de las ruedas en el eje y
 		float colores[2][4];    // Color RGB y canal Alfa
 
 		float   *modelo0;        // modelo a representar
@@ -144,6 +146,7 @@ public: // Atributos de la clase
         int     show_car;
         int     show_wheels;
         int     show_road;
+        int     show_mesa;
 
         GLfloat view_position[3];
         GLfloat view_rotate[16];

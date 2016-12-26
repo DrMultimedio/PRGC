@@ -84,6 +84,18 @@ TPrimitiva::TPrimitiva(int DL, int t)
             modelo1 = Load3DS("../../Modelos/rodillo.3ds", &num_vertices1);
             break;
 		}
+		case MESA_ID: {  // Creación de la carretera
+		    tx = ty = tz = 0;
+
+            memcpy(colores, coloresr_c, 8*sizeof(float));
+
+            //************************ Cargar modelos 3ds ***********************************
+            // formato 8 floats por vértice (x, y, z, A, B, C, u, v)
+            modelo0 = Load3DS("../../Modelos/desktop.3ds", &num_vertices0);
+
+            break;
+		}
+
 	} // switch
 }
 
@@ -97,6 +109,39 @@ void __fastcall TPrimitiva::Render(int seleccion, bool reflejo)
             if (escena.show_road) {
                 // Cálculo de la ModelView
                 modelMatrix     = glm::mat4(1.0f); // matriz identidad
+                modelMatrix     = glm::translate(modelMatrix,glm::vec3(tx, ty-3, tz));
+                modelViewMatrix = escena.viewMatrix * modelMatrix;
+                // Envía nuestra ModelView al Vertex Shader
+                glUniformMatrix4fv(escena.uMVMatrixLocation, 1, GL_FALSE, &modelViewMatrix[0][0]);
+
+                // Pintar la carretera
+                glUniform4fv(escena.uColorLocation, 1, colores[0]);
+                //                   Asociamos los vértices y sus normales
+                glVertexAttribPointer(escena.aPositionLocation, POSITION_COMPONENT_COUNT, GL_FLOAT, false, STRIDE, modelo0);
+                glVertexAttribPointer(escena.aNormalLocation, NORMAL_COMPONENT_COUNT, GL_FLOAT, false, STRIDE, modelo0+3);
+
+                glDrawArrays(GL_TRIANGLES, 0, num_vertices0);
+
+                // Pintar las líneas
+                glUniform4fv(escena.uColorLocation, 1, colores[1]);
+                //                   Asociamos los vértices y sus normales
+                glVertexAttribPointer(escena.aPositionLocation, POSITION_COMPONENT_COUNT, GL_FLOAT, false, STRIDE, modelo1);
+                glVertexAttribPointer(escena.aNormalLocation, NORMAL_COMPONENT_COUNT, GL_FLOAT, false, STRIDE, modelo1+3);
+
+                glDrawArrays(GL_TRIANGLES, 0, num_vertices1);
+
+
+            }
+            break;
+        }
+        case MESA_ID: {
+            if (escena.show_road) {
+                // Cálculo de la ModelView
+                modelMatrix     = glm::mat4(1.0f); // matriz identidad
+                modelMatrix     = glm::translate(modelMatrix,glm::vec3(tx, ty-3, tz));
+
+                modelMatrix     = glm::translate(modelMatrix,glm::vec3(tx, ty, tz));
+
                 modelViewMatrix = escena.viewMatrix * modelMatrix;
                 // Envía nuestra ModelView al Vertex Shader
                 glUniformMatrix4fv(escena.uMVMatrixLocation, 1, GL_FALSE, &modelViewMatrix[0][0]);
@@ -154,15 +199,11 @@ void __fastcall TPrimitiva::Render(int seleccion, bool reflejo)
                 modelMatrix     = glm::mat4(1.0f); // matriz identidad
                 //modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(180.0), glm::vec3(0,0,1));   // en radianes
 
-<<<<<<< HEAD
-                modelMatrix     = glm::translate(modelMatrix, glm::vec3(tx, ty+0.60, tz-0.6));
+                modelMatrix     = glm::translate(modelMatrix, glm::vec3(tx, ty-0.25, tz));
+
                 modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(-rc), glm::vec3(0,1,0));
-=======
->>>>>>> origin/master
+
                 modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(rr), glm::vec3(1,0,0));      // en radianes
-
-
-                modelMatrix     = glm::translate(modelMatrix, glm::vec3(tx-0.15, ty+0.60, tz-0.6));
 
                 modelViewMatrix = escena.viewMatrix * modelMatrix;
 
@@ -174,15 +215,17 @@ void __fastcall TPrimitiva::Render(int seleccion, bool reflejo)
 
                 // RUEDA Trasera : Cálculo de la matriz modelo
                 modelMatrix     = glm::mat4(1.0f); // matriz identidad
+                modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(90), glm::vec3(0,0,1));
 
+                modelMatrix     = glm::translate(modelMatrix, glm::vec3(tx, ty-0.25, tz-0.75));
 
-
-                modelMatrix     = glm::translate(modelMatrix, glm::vec3(tx, ty+0.65, tz-4.0));
-
-                modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(rr), glm::vec3(1,0,0));
                 modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(-rc), glm::vec3(0,1,0));
 
-                //modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(180), glm::vec3(0,1,0));
+                modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(rr), glm::vec3(1,0,0));
+
+
+
+
 
 
 
@@ -523,8 +566,8 @@ void __fastcall TGui::Init(int main_window) {
      // Añade una separación
     new GLUI_StaticText( glui, "" );
 
-    new GLUI_StaticText( glui, "  Autor:" );
     new GLUI_StaticText( glui, "  2012-2016 (C) Juan Antonio Puchol  " );
+    new GLUI_StaticText( glui, "  Autor:" );
 
     // Añade una separación
     new GLUI_StaticText( glui, "" );
