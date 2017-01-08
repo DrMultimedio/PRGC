@@ -31,6 +31,12 @@
 #define CARRETERA_ID    10
 #define MESA_ID    11
 #define CAMA_ID    12
+#define SILLA_ID    13
+#define HABITACION_ID    14
+#define ESTANTERIA_ID 15
+#define DS_ID 16
+#define DONUT_ID 17
+#define TAZA_ID 18
 
 #define COCHE_ID	    100 // Un coche cada 100
 
@@ -146,7 +152,6 @@ public: // Atributos de la clase
         int     show_car;
         int     show_wheels;
         int     show_road;
-        int     show_mesa;
 
         GLfloat view_position[3];
         GLfloat view_rotate[16];

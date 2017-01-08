@@ -161,8 +161,8 @@ void Motion(int x, int y){
 
 /**************************************** main() ********************/
 
-int main(int argc, char* argv[])
-{
+int main(int argc, char* argv[]){
+
     // Inicializa GLUT and crea la ventana principal
     glutInit(&argc, argv);
     glutInitDisplayMode( GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH | GLUT_STENCIL | GLUT_MULTISAMPLE );
@@ -186,11 +186,16 @@ int main(int argc, char* argv[])
     GLUI_Master.set_glutIdleFunc( Idle );
 
     // Crea los objetos
-    TPrimitiva *road = new TPrimitiva(CARRETERA_ID, CARRETERA_ID);
     TPrimitiva *car1 = new TPrimitiva(1, COCHE_ID);
     TPrimitiva *car2 = new TPrimitiva(2, COCHE_ID);
     TPrimitiva *mesa = new TPrimitiva(MESA_ID, MESA_ID);
     TPrimitiva *cama = new TPrimitiva(CAMA_ID, CAMA_ID);
+    TPrimitiva *silla = new TPrimitiva(SILLA_ID, SILLA_ID);
+    TPrimitiva *habitacion = new TPrimitiva(HABITACION_ID, HABITACION_ID);
+    TPrimitiva *estanteria = new TPrimitiva(ESTANTERIA_ID, ESTANTERIA_ID);
+    TPrimitiva *consola = new TPrimitiva(DS_ID, DS_ID);
+    TPrimitiva *taza = new TPrimitiva(TAZA_ID, TAZA_ID);
+    TPrimitiva *donut = new TPrimitiva(DONUT_ID, DONUT_ID);
 
 
 
@@ -202,9 +207,14 @@ int main(int argc, char* argv[])
     car2->tx = 2;
     car2->tz = 3;
 
-    escena.AddObject(road);
     escena.AddObject(mesa);
     escena.AddObject(cama);
+    escena.AddObject(habitacion);
+    escena.AddObject(silla);
+    escena.AddObject(estanteria);
+    escena.AddObject(consola);
+    escena.AddObject(taza);
+    escena.AddObject(donut);
 
     escena.AddCar(car1);
     escena.AddCar(car2);
